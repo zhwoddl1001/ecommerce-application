@@ -4,14 +4,15 @@ import com.kht.ecommerce.ecommerce_application.dto.Cart;
 import com.kht.ecommerce.ecommerce_application.dto.Product;
 import com.kht.ecommerce.ecommerce_application.dto.User;
 import com.kht.ecommerce.ecommerce_application.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
 public class ApiController {
 
@@ -41,17 +42,33 @@ public class ApiController {
     public List<Cart> getCart(@RequestParam("userId") int userId) {
         return cartService.getCartByUserId(userId);
     }
-
     /*
-    HTTP Status 500 – Internal Server Error 서버에서 생각지못한 문제 발생
-    Expected one result (or null) to be returned by selectOne(), but found: 3
-    
-    */
+     Param = 파라미터 = 매개변수
+    * @RequestParam 부분적으로 저장할 때 사용
+    * 
+    * @RequestBody 전체적으로 저장할 때 사용
+    * */
+        @PostMapping("/api/join")
+        public void join(@RequestBody User user) {
+            log.info("join user: {}", user);
+            userService.insertUser(user);
+        }
+        @PostMapping("/api/product/insert")
+        public void addProduct(@RequestBody Product product) {
+            log.info("add product: {}", product);
+            productService.addProduct();
+        }
 
-    @GetMapping("/api/cart{userId}")
-    public String getCartByUserId(@PathVariable("userId") int id) {
-        return "cart";
-    }
+        @GetMapping("/api/existEmail")
+    public boolean existEmail(@RequestParam("email") String email) {
+            
+            return userService.existByEmail(email); // 결과를 html 에 true false 로 전달
+        }
+
+        @GetMapping("/api/user/userId")
+        public List<User> getUserById(@RequestParam("userId") int userId) {
+            return userService.getDetailUser(userId);
+        }
     /*
     @RequestParam = ?
 

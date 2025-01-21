@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 상세보기</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<h1>사용자 상세 정보</h1>
+<div id="user-detail-container"></div>
+<script>
+    $.ajax({
+        url:`/api/user?userId=${userId}`,
+        method:'GET',
+        success:
+        function (data) {
+            $.each(data, function (index, user) {
+                $('user-detail-container').append(`
+               <h3>${user.firstname}</h3>
+               <h3>${user.lastname}</h3>
+               <h3>${user.email}</h3>
+               <h3>${user.phone}</h3>
+               <h3>${user.city}</h3>
+            `)
+            })
+        },
+        error:
+        function (){
+            $('#user-detail-container').append(`<p>서버로부터 데이터를 가져올 수 없습니다</p>`)
+        }
+    })
+</script>
+<script src="/user_detail.js"></script>
+</body>
+</html>
+
