@@ -3,6 +3,7 @@ package com.kht.ecommerce.ecommerce_application.service;
 import com.kht.ecommerce.ecommerce_application.dto.User;
 import com.kht.ecommerce.ecommerce_application.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService {
         userMapper.insertUser(user); // DB에서 가져온 값을 return 해서 반환할 필요가 없음
         // DB에 저장을 하는 것이지 데이터베이스에서 꺼내오는 것이 아니기 때문에
         // return 을 사용하지 않고 void 사용
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
     @Override
