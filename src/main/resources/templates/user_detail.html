@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사용자 상세보기</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Title</title>
+    <link rel="icon" href="/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-<h1>사용자 상세 정보</h1>
-<div id="user-detail-container"></div>
+<h1>유저 상세정보</h1>
+<div id="userDetail"></div>
 <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    console.log(id);
     $.ajax({
-        url:`/api/user?userId=${userId}`,
-        method:'GET',
-        success:
-        function (data) {
-            $.each(data, function (index, user) {
-                $('user-detail-container').append(`
-               <h3>${user.firstname}</h3>
-               <h3>${user.lastname}</h3>
-               <h3>${user.email}</h3>
-               <h3>${user.phone}</h3>
-               <h3>${user.city}</h3>
-            `)
-            })
-        },
-        error:
-        function (){
-            $('#user-detail-container').append(`<p>서버로부터 데이터를 가져올 수 없습니다</p>`)
+        url: `/api/user/${id}`,
+        method: "GET",
+        success: function (data) {
+            $("#userDetail").html(`
+            <h1>${data.lastname}   ${data.firstname}</h1>
+            <p>${data.email}</p>
+            <p>${data.username}</p>
+            <p>${data.phone}</p>
+            <p>${data.city}</p>
+            <p>${data.street}</p>
+            <!-- /user/edit?id="$ { data.id }    => ViewController 에서
+                 user-edit.html 템플릿과 연결하는 url
+            -->
+            <a href="/user/edit?id=${data.id}">정보 수정하기</a>
+          `);
         }
+
     })
 </script>
-<script src="/user_detail.js"></script>
 </body>
 </html>
-

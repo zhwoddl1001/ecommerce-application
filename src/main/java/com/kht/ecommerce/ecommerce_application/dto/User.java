@@ -1,5 +1,4 @@
 package com.kht.ecommerce.ecommerce_application.dto;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,5 +25,4 @@ public class User {
     private String zipcode;
     private String geolocationLat;
     private String geolocationLong;
-    
 }

@@ -1,7 +1,5 @@
 package com.kht.ecommerce.ecommerce_application.config;
 
-
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;

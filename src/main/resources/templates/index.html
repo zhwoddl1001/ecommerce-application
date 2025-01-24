@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>사용자 목록</title>
-  <link href="favicon.ico" rel="icon">
+  <link href="/favicon.ico" rel="icon">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="/styles.css">
+  <link href="/styles.css" rel="stylesheet">
 </head>
 <body>
 <h1>사용자 목록</h1>
@@ -14,35 +14,28 @@
 
 <script>
   $(document).ready(function () {
-            $.ajax({
-              url: '/api/users',
-              method: 'GET',
-              success:
-              function(data){
-                $.each(data, function (key,value){
+    $.ajax({
+      url: '/api/users',
+      method: 'GET',
+      success:
+              function (data) {
+                $.each(data, function (key, value) {
                   console.log("key : ", key, "value : ", value);
                   $('#user-container').append(
-                          `<div class="card">
-                        <h3>${value.lastname}${value.firstname}</h3>
-                        <p>${value.phone}</p>
-                        <a href="/cart?userId=${value.userId}">장바구니 확인하기</a>
-                        <a href="/api/user?userId=${value.userId}">유저 정보 보기</a>
-                        </div>`
-                  )
+                          '<div class="card">' +
+                          '<h3>' + value.lastname + value.firstname + '</h3>' +
+                          '<p>' + value.phone + '</p>' +
+                          '<a href="/user?id='+ value.id      + ' "> 이동하기</a><br>' +
+                          '<a href="/cart?userId=' + value.userId + '"> 장바구니 확인하기</a>'  +
+                          '</div>')
                 })
               },
-          error: function () {
-            $('#user-container').append('<p>서버에서 데이터를 가져올 수 없습니다.</p>')
-               }
-
-        });
-
+      error:
+              function () {
+                $('#user-container').append('<p>서버에서 데이터를 가져올 수 없습니다.</p>')
+              }
+    })
   })
-
-
-
-
-
 </script>
 <script src="/user.js"></script>
 </body>
